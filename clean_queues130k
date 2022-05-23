@@ -1,0 +1,6 @@
+#terminates pppoe connections with mismatched queues
+:foreach  Id in=[/queue simple find max-limit="130k/130k"] do={
+:local qname [/queue simple get $Id name]
+:local quser [ :pick $qname 7 ( [ :len $qname ] -1 ) ]
+interface pppoe-server remove [find user=$quser]
+}
